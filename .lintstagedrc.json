@@ -1,0 +1,4 @@
+{
+  "*.ts": ["yarn prettier:staged", "yarn eslint:staged"],
+  "*": ["yarn prettier:staged"]
+}

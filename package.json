@@ -1,0 +1,68 @@
+{
+  "name": "its__ms_template",
+  "license": "MIT",
+  "author": {
+    "name": "Sergey Dunaevskiy",
+    "email": "sergey@dunaevskiy.dev",
+    "url": "https://dunaevskiy.dev"
+  },
+  "scripts": {
+    "@ABBR": "------------------------------------------------------------------------------------",
+    "b": "yarn build",
+    "d": "yarn dev",
+    "@PROD": "------------------------------------------------------------------------------------",
+    "build": "webpack",
+    "start": "node ./build/main.js",
+    "@DEV": "-------------------------------------------------------------------------------------",
+    "build:watch": "webpack --watch",
+    "start:watch": "nodemon --watch ./build ./build/main.js",
+    "dev": "run-p build:watch start:watch",
+    "@DOCKER": "----------------------------------------------------------------------------------",
+    "docker:build": "docker build -t its__ms_template .",
+    "@TEST": "------------------------------------------------------------------------------------",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "@LINTER": "----------------------------------------------------------------------------------",
+    "lint:check": "yarn prettier:check && yarn eslint:check",
+    "lint:fix": "yarn prettier:fix && yarn eslint:fix",
+    "eslint:check": "eslint --ext .ts,.tsx .",
+    "eslint:fix": "eslint --ext .ts,.tsx --fix .",
+    "eslint:staged": "eslint --ext .ts,.tsx --fix",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "prettier:staged": "prettier --write --ignore-unknown",
+    "@OTHER": "-----------------------------------------------------------------------------------",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/amqplib": "^0.8.2",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.7",
+    "lint-staged": "^12.3.2",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

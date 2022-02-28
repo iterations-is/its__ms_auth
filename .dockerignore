@@ -1,0 +1,7 @@
+# ignore all
+**
+
+# whitelist
+!/build
+!/.env
+!/package.json
