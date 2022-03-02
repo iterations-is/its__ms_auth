@@ -1,11 +1,13 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { json } from 'express';
 
 import { aboutRouter } from '../src-ms';
 import { MS_EXPRESS_PORT } from './constants';
 import { externalRouter, internalRouter } from './routes';
 
 const app = express();
+
+app.use(json());
 
 app.use('/auth-service', aboutRouter);
 app.use('/auth-service', externalRouter);
