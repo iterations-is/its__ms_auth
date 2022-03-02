@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 interface ResponseTemplate {
 	message?: string;
-	payload?: any;
+	payload?: object;
 	code?: string;
 }
 

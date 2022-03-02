@@ -36,10 +36,10 @@ externalRouter.post('/signin', (req: Request, res: Response) => {
 	if (error) return response(res, 400, { message: 'validation error', payload: error });
 
 	// REST Try to find user
-	const username = signInReq.username;
+	// const username = signInReq.username;
 
 	// Try to validate password
-	const hash = '';
+	// const hash = '';
 
 	// Create token pair
 	const tokenPair: TokenPairDTO = generateTokens('5 seconds', '100 seconds')({});
@@ -54,7 +54,7 @@ externalRouter.post('/reset-password', (req: Request, res: Response) => {
 	if (error) return response(res, 400, { message: 'validation error', payload: error });
 
 	// REST Try to find user
-	const email = resetPassword.email;
+	// const email = resetPassword.email;
 
 	// REST Update password
 
