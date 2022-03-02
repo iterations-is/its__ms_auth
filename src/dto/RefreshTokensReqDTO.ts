@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 export interface RefreshTokensReqDTO {
-	accessToken: string;
+	token: string;
 }
 
 export const RefreshTokensReqDTOSchema: Joi.ObjectSchema = Joi.object({
-	accessToken: Joi.string(),
+	token: Joi.string(),
 });

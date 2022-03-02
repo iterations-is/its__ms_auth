@@ -1,4 +1,6 @@
 import { Router, Response, Request } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
 import {
 	RefreshTokensReqDTO,
 	RefreshTokensReqDTOSchema,
@@ -10,8 +12,9 @@ import {
 	SignUpReqDTOSchema,
 	TokenPairDTO,
 } from '../dto';
-import { response } from '../../src-ms/utils';
+import { response } from '../../src-ms';
 import { generateTokens } from '../utils';
+import { JWT_SECRET } from '../constants';
 
 export const externalRouter = Router();
 
@@ -70,8 +73,17 @@ externalRouter.post('/refresh', (req: Request, res: Response) => {
 	if (error) return response(res, 400, { message: 'validation error', payload: error });
 
 	// Check if refresh token is valid
+	const token = refreshTokensReq.token;
+	let payload: string | JwtPayload;
+	try {
+		payload = jwt.verify(token, JWT_SECRET);
+	} catch (err) {
+		// TODO: more error types
+		return response(res, 400, { message: 'invalid token' });
+	}
 
 	// Generate a new pair with data from the old pair
+	const tokenPair: TokenPairDTO = generateTokens('5 seconds', '100 seconds')(payload);
 
-	res.json({ info: 'success refresh' });
+	return response(res, 200, { message: 'credentials', payload: tokenPair });
 });
