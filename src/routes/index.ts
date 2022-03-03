@@ -1,2 +1,2 @@
-export * from './main-external.router';
-export * from './main-internal.router';
+export * from './external.router';
+export * from './internal.router';
