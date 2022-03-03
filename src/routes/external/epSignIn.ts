@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import { omit } from 'lodash';
 
 import { SignInReqDTO, SignInReqDTOSchema, TokenPairDTO, UserDataResDTO } from '../../dto';
 import {
@@ -49,7 +50,7 @@ export const epSignIn = async (req: Request, res: Response) => {
 	const tokenPair: TokenPairDTO = generateTokens(
 		JWT_EXPIRATION_TIME_ACCESS,
 		JWT_EXPIRATION_TIME_REFRESH
-	)(userData);
+	)(omit(userData, ['password']));
 
 	return res.status(200).json({
 		message: 'credentials',

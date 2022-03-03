@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
+import { omit } from 'lodash';
 
 import { SignUpReqDTO, SignUpReqDTOSchema, TokenPairDTO } from '../../dto';
 import {
@@ -30,7 +31,7 @@ export const epSignUp = async (req: Request, res: Response) => {
 	const tokenPair: TokenPairDTO = generateTokens(
 		JWT_EXPIRATION_TIME_ACCESS,
 		JWT_EXPIRATION_TIME_REFRESH
-	)(userData);
+	)(omit(userData, ['password']));
 
 	return res.status(201).json({
 		message: 'user was created',
