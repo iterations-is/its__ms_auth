@@ -1,5 +1,7 @@
 {
-  "name": "its__ms_template",
+  "name": "its__ms_auth",
+  "version": "0.0.1",
+  "description": "MS Auth - authorization, verification etc. stuff",
   "license": "MIT",
   "author": {
     "name": "Sergey Dunaevskiy",
