@@ -10,6 +10,7 @@ import {
 } from '../../constants';
 import { handleRestError } from '../../../src-ms';
 import { generateTokens } from '../../utils';
+import { notifier } from '../../broker';
 
 export const epSignUp = async (req: Request, res: Response) => {
 	// Validation
@@ -18,7 +19,7 @@ export const epSignUp = async (req: Request, res: Response) => {
 	if (error) return res.status(400).json({ message: 'validation error', payload: error });
 
 	// REST Create user
-	let userData: object;
+	let userData;
 	try {
 		const userCreationResponse = await axios.post(`${URI_MS_USERS}/users`, signUpReq);
 		userData = userCreationResponse.data.payload;
@@ -32,6 +33,11 @@ export const epSignUp = async (req: Request, res: Response) => {
 		JWT_EXPIRATION_TIME_ACCESS,
 		JWT_EXPIRATION_TIME_REFRESH
 	)(omit(userData, ['password']));
+
+	notifier.send({
+		userId: userData.id,
+		text: 'Welcome to the system!',
+	});
 
 	return res.status(201).json({
 		message: 'user was created',
