@@ -40,7 +40,7 @@ export const epResetPassword = async (req: Request, res: Response) => {
 
 			notifier.send({
 				userId,
-				text: 'A new password was sent to your email',
+				description: 'A new password was sent to your email',
 			});
 
 			emailer.send({
