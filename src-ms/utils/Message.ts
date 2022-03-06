@@ -4,5 +4,5 @@ export interface Message {
 	// Description
 	message?: string;
 	// Useful data
-	payload?: object;
+	payload?: any;
 }

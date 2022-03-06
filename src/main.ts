@@ -4,7 +4,12 @@ import express, { json } from 'express';
 import { aboutRouter } from '../src-ms';
 import { MS_EXPRESS_PORT } from './constants';
 import { externalRouter, internalRouter } from './routes';
+import { runBroker } from './broker';
 
+// RMQ
+runBroker();
+
+// Express
 const app = express();
 
 app.use(json());
