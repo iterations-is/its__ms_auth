@@ -1,5 +1,5 @@
-export interface BrokerMessageNotification {
-	userId: string;
-	createdAt?: Date;
+export interface BrokerMessageLog {
 	description: string;
+	createdAt: Date;
+	ms: string;
 }
