@@ -5,7 +5,7 @@ import { ResetPasswordReqDTO, ResetPasswordReqDTOSchema, UserDataResDTO } from '
 import { URI_MS_USERS } from '../../constants';
 import { handleRestError } from '../../../src-ms';
 import { generateRandomString } from '../../utils';
-import { notifier } from '../../broker';
+import { emailer, notifier } from '../../broker';
 
 export const epResetPassword = async (req: Request, res: Response) => {
 	// Validation
@@ -37,19 +37,21 @@ export const epResetPassword = async (req: Request, res: Response) => {
 		try {
 			password = generateRandomString(14);
 			await axios.patch(`${URI_MS_USERS}/users/${userId}`, { password });
+
+			notifier.send({
+				userId,
+				text: 'A new password was sent to your email',
+			});
+
+			emailer.send({
+				to: email,
+				text: `Hello ${userData.name}. Your new password is: ${password}`,
+			});
 		} catch (error) {
 			const errorData = handleRestError(error);
 			return res.status(errorData[0]).json(errorData[1]);
 		}
 	}
-
-	notifier.send({
-		type: 'reset-password',
-		payload: {
-			to: email,
-			text: `Hello ${userData.name}. Your new password is: ${password}`,
-		},
-	});
 
 	return res.status(200).json({ message: 'a email with a new password was reset' });
 };
