@@ -1,13 +1,13 @@
 import 'dotenv/config';
 import express, { json } from 'express';
 
-import { aboutRouter } from '../src-ms';
+import { aboutRouter, runBroker } from '../src-ms';
 import { MS_EXPRESS_PORT } from './constants';
 import { externalRouter, internalRouter } from './routes';
-import { runBroker } from './broker';
+import { channelConsumers, channelProducers } from './broker';
 
 // RMQ
-runBroker();
+runBroker(channelProducers, channelConsumers);
 
 // Express
 const app = express();

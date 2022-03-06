@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { ResetPasswordReqDTO, ResetPasswordReqDTOSchema, UserDataResDTO } from '../../dto';
 import { URI_MS_USERS } from '../../constants';
-import { handleRestError } from '../../../src-ms';
+import { BrokerMessageEmail, BrokerMessageNotification, handleRestError } from '../../../src-ms';
 import { generateRandomString } from '../../utils';
 import { emailer, notifier } from '../../broker';
 
@@ -38,15 +38,19 @@ export const epResetPassword = async (req: Request, res: Response) => {
 			password = generateRandomString(14);
 			await axios.patch(`${URI_MS_USERS}/users/${userId}`, { password });
 
-			notifier.send({
+			const notificationPasswordChange: BrokerMessageNotification = {
 				userId,
+				createdAt: new Date(),
 				description: 'A new password was sent to your email',
-			});
+			};
+			notifier.send(notificationPasswordChange);
 
-			emailer.send({
+			const emailPasswordChange: BrokerMessageEmail = {
 				to: email,
+				subject: 'ITS - Your new password',
 				text: `Hello ${userData.name}. Your new password is: ${password}`,
-			});
+			};
+			emailer.send(emailPasswordChange);
 		} catch (error) {
 			const errorData = handleRestError(error);
 			return res.status(errorData[0]).json(errorData[1]);

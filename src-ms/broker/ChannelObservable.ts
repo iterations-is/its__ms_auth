@@ -1,8 +1,8 @@
 import { Channel } from 'amqplib/callback_api';
 
-export class BrokerChannel {
-	channel: any;
+export class ChannelObservable {
 	name: string;
+	channel: Channel;
 
 	constructor(name: string) {
 		this.name = name;

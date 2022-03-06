@@ -8,7 +8,7 @@ import {
 	JWT_EXPIRATION_TIME_REFRESH,
 	URI_MS_USERS,
 } from '../../constants';
-import { handleRestError } from '../../../src-ms';
+import { BrokerMessageNotification, handleRestError } from '../../../src-ms';
 import { generateTokens } from '../../utils';
 import { notifier } from '../../broker';
 
@@ -34,10 +34,12 @@ export const epSignUp = async (req: Request, res: Response) => {
 		JWT_EXPIRATION_TIME_REFRESH
 	)(omit(userData, ['password']));
 
-	notifier.send({
+	const notificationPasswordChange: BrokerMessageNotification = {
 		userId: userData.id,
-		text: 'Welcome to the system!',
-	});
+		createdAt: new Date(),
+		description: 'Welcome to the system!',
+	};
+	notifier.send(notificationPasswordChange);
 
 	return res.status(201).json({
 		message: 'user was created',
