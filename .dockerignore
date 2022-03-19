@@ -1,7 +1,4 @@
-# ignore all
-**
-
-# whitelist
-!/build
-!/.env
-!/package.json
+/.git
+/build
+/node_modules
+/test

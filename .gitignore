@@ -10,4 +10,6 @@
 # project
 /build
 /coverage
+/node_modules
 .env
+.env.production

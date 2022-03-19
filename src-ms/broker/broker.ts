@@ -1,9 +1,9 @@
 import { Connection } from 'amqplib';
 import amqp from 'amqplib/callback_api';
 import { BROKER_URL } from '../../src/constants';
-import { ChannelProducer } from './channelProducer';
+import { ChannelProducer } from './ChannelProducer';
 import { activateChannelProducer } from './activateChannelProducer';
-import { ChannelConsumer } from './channelConsumer';
+import { ChannelConsumer } from './ChannelConsumer';
 import { activateChannelConsumer } from './activateChannelConsumer';
 
 export const runBroker = (
