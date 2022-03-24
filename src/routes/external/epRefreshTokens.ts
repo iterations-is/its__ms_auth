@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 import { RefreshTokensReqDTO, RefreshTokensReqDTOSchema, TokenPairDTO } from '../../dto';
-import { JWT_SECRET } from '../../constants';
+import {
+	JWT_EXPIRATION_TIME_ACCESS,
+	JWT_EXPIRATION_TIME_REFRESH,
+	JWT_SECRET,
+} from '../../constants';
 import { generateTokens } from '../../utils';
 
 export const epRefreshTokens = (req: Request, res: Response) => {
@@ -17,7 +21,7 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 
 	// Check if refresh token is valid
 	const token = refreshTokensReq.token;
-	let payload: string | JwtPayload;
+	let payload: any;
 	try {
 		payload = jwt.verify(token, JWT_SECRET);
 	} catch (err) {
@@ -28,7 +32,10 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 	}
 
 	// Generate a new pair with data from the old pair
-	const tokenPair: TokenPairDTO = generateTokens('5 seconds', '100 seconds')(payload);
+	const tokenPair: TokenPairDTO = generateTokens(
+		JWT_EXPIRATION_TIME_ACCESS,
+		JWT_EXPIRATION_TIME_REFRESH
+	)(payload?.payload);
 
 	return res.status(200).json({
 		message: 'credentials',

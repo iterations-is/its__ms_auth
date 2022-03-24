@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express, { json } from 'express';
+import cors from 'cors';
 
 import { aboutRouter, runBroker } from '../src-ms';
 import { MS_EXPRESS_PORT } from './constants';
@@ -12,6 +13,7 @@ runBroker(channelProducers, channelConsumers);
 // Express
 const app = express();
 
+app.use(cors());
 app.use(json());
 
 app.use('/auth-service', aboutRouter);
