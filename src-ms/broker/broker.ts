@@ -23,7 +23,7 @@ export const runBroker = (
 			});
 		});
 	} catch (error) {
-		// TODO: handle error
 		console.log(error);
+		process.exit(1);
 	}
 };

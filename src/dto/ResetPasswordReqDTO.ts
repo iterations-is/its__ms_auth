@@ -5,5 +5,7 @@ export interface ResetPasswordReqDTO {
 }
 
 export const ResetPasswordReqDTOSchema: Joi.ObjectSchema = Joi.object({
-	email: Joi.string().email().required(),
+	email: Joi.string()
+		.email({ tlds: { allow: false } })
+		.required(),
 });

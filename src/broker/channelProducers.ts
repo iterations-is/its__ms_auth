@@ -4,7 +4,7 @@ import {
 	BROKER_CHANNEL_NOTIFICATIONS,
 	ChannelObservable,
 	ChannelProducer,
-} from '../../src-ms';
+} from '@its/ms';
 
 export const notifier = new ChannelObservable(BROKER_CHANNEL_NOTIFICATIONS);
 export const emailer = new ChannelObservable(BROKER_CHANNEL_EMAILS);

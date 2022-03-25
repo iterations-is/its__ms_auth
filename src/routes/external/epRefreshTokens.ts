@@ -8,16 +8,13 @@ import {
 	JWT_SECRET,
 } from '../../constants';
 import { generateTokens } from '../../utils';
+import { MessageDTO } from '@its/ms';
 
 export const epRefreshTokens = (req: Request, res: Response) => {
 	// Validation
 	const refreshTokensReq: RefreshTokensReqDTO = req.body;
 	const { error } = RefreshTokensReqDTOSchema.validate(refreshTokensReq);
-	if (error)
-		return res.status(400).json({
-			message: 'validation error',
-			payload: error,
-		});
+	if (error) return res.status(400).json({ code: 'VALIDATION', payload: error } as MessageDTO);
 
 	// Check if refresh token is valid
 	const token = refreshTokensReq.token;
@@ -25,10 +22,9 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 	try {
 		payload = jwt.verify(token, JWT_SECRET);
 	} catch (err) {
-		// TODO: more error types
 		return res.status(400).json({
 			message: 'invalid token',
-		});
+		} as MessageDTO);
 	}
 
 	// Generate a new pair with data from the old pair
@@ -40,5 +36,5 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 	return res.status(200).json({
 		message: 'credentials',
 		payload: tokenPair,
-	});
+	} as MessageDTO);
 };

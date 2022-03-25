@@ -1,3 +1,3 @@
-import { ChannelConsumer } from '../../src-ms';
+import { ChannelConsumer } from '@its/ms';
 
 export const channelConsumers: ChannelConsumer[] = [];

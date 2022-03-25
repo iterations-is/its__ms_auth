@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express, { json } from 'express';
 import cors from 'cors';
 
-import { aboutRouter, runBroker } from '../src-ms';
+import { aboutRouter, runBroker } from '@its/ms';
 import { MS_EXPRESS_PORT } from './constants';
 import { externalRouter, internalRouter } from './routes';
 import { channelConsumers, channelProducers } from './broker';

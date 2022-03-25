@@ -16,6 +16,9 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.ts', '.js'],
+		alias: {
+			'@its/ms': path.resolve(__dirname, 'src-ms'),
+		},
 	},
 	output: {
 		filename: '[name].js',
@@ -25,6 +28,9 @@ module.exports = {
 	target: 'node',
 	externalsPresets: {
 		node: true,
+	},
+	externals: {
+		_http_common: 'commonjs2 _http_common',
 	},
 	optimization: {
 		splitChunks: {
