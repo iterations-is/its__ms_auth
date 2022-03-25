@@ -40,7 +40,6 @@ describe('handleRestError', () => {
 	});
 
 	it('should generate 500 response', () => {
-		const status = 400;
 		const data = { message: 'server not responding' };
 		const error = {
 			request: {},
@@ -53,7 +52,6 @@ describe('handleRestError', () => {
 	});
 
 	it('should generate global 500 error', () => {
-		const status = 500;
 		const data = { message: 'global server error' };
 		const error = {} as AxiosError;
 
