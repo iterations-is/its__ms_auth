@@ -3,7 +3,13 @@ import axios from 'axios';
 import { pick } from 'lodash';
 
 import { SignUpReqDTO, SignUpReqDTOSchema, TokenPairDTO } from '../../dto';
-import { BrokerMessageLog, BrokerMessageNotification, handleRestError, MessageDTO } from '@its/ms';
+import {
+	API_INTERNAL_TOKEN,
+	BrokerMessageLog,
+	BrokerMessageNotification,
+	handleRestError,
+	MessageDTO,
+} from '@its/ms';
 import { generateTokens } from '../../utils';
 import { logger, notifier } from '../../broker';
 import { MS_NAME, URI_MS_USERS } from '../../constants';
@@ -17,7 +23,9 @@ export const epSignUp = async (req: Request, res: Response) => {
 	// REST Create user
 	let userData;
 	try {
-		const userCreationResponse = await axios.post(`${URI_MS_USERS}/users`, signUpReq);
+		const userCreationResponse = await axios.post(`${URI_MS_USERS}/users`, signUpReq, {
+			headers: { 'x-its-ms': API_INTERNAL_TOKEN },
+		});
 		userData = userCreationResponse.data.payload;
 	} catch (error) {
 		// REST error

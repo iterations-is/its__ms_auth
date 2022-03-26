@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { pick } from 'lodash';
-import { BrokerMessageLog, handleRestError, MessageDTO } from '@its/ms';
+import { API_INTERNAL_TOKEN, BrokerMessageLog, handleRestError, MessageDTO } from '@its/ms';
 import { SignInReqDTO, SignInReqDTOSchema, TokenPairDTO, UserDataResDTO } from '../../dto';
 import { MS_NAME, URI_MS_USERS } from '../../constants';
 import { generateTokens } from '../../utils';
@@ -18,7 +18,11 @@ export const epSignIn = async (req: Request, res: Response) => {
 	const username: string = signInReq.username;
 	let userData: UserDataResDTO;
 	try {
-		const userCreationResponse = await axios.post(`${URI_MS_USERS}/users/search`, { username });
+		const userCreationResponse = await axios.post(
+			`${URI_MS_USERS}/users/search`,
+			{ username },
+			{ headers: { 'x-its-ms': API_INTERNAL_TOKEN } }
+		);
 		userData = userCreationResponse.data.payload;
 
 		if (!userData)

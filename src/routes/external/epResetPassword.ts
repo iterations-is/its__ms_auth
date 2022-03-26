@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ResetPasswordReqDTO, ResetPasswordReqDTOSchema, UserDataResDTO } from '../../dto';
 import { MS_NAME, URI_MS_USERS } from '../../constants';
 import {
+	API_INTERNAL_TOKEN,
 	BrokerMessageEmail,
 	BrokerMessageLog,
 	BrokerMessageNotification,
@@ -23,7 +24,11 @@ export const epResetPassword = async (req: Request, res: Response) => {
 	const email: string = resetPassword.email;
 	let userData: UserDataResDTO;
 	try {
-		const userCreationResponse = await axios.post(`${URI_MS_USERS}/users/search`, { email });
+		const userCreationResponse = await axios.post(
+			`${URI_MS_USERS}/users/search`,
+			{ email },
+			{ headers: { 'x-its-ms': API_INTERNAL_TOKEN } }
+		);
 		userData = userCreationResponse.data.payload;
 
 		if (!userData)
@@ -47,7 +52,11 @@ export const epResetPassword = async (req: Request, res: Response) => {
 	if (userId) {
 		try {
 			password = generateRandomString(14);
-			await axios.patch(`${URI_MS_USERS}/users/${userId}`, { password });
+			await axios.patch(
+				`${URI_MS_USERS}/users/${userId}`,
+				{ password },
+				{ headers: { 'x-its-ms': API_INTERNAL_TOKEN } }
+			);
 
 			notifier.send({
 				userId,
