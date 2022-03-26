@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Request, Response, NextFunction } from 'express';
 
 import { handleRestError } from '../utils';
-import { URI_MS_PROJECTS, URI_MS_USERS } from '../constants';
+import { API_INTERNAL_TOKEN, URI_MS_PROJECTS, URI_MS_USERS } from '../constants';
 import { MessageDTO } from '../dto';
 
 /**
@@ -48,7 +48,12 @@ export const mwPermissions =
 			try {
 				const userProjectRole: AxiosResponse = await axios.get(
 					`${URI_MS_PROJECTS}/projects/${projectId}/users/${userId}`,
-					{ headers: { Authorization: tokenHeader } }
+					{
+						headers: {
+							Authorization: tokenHeader,
+							'x-its-ms': API_INTERNAL_TOKEN,
+						},
+					}
 				);
 
 				const projectRole = userProjectRole?.data?.payload?.role;
