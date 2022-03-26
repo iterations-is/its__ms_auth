@@ -1,1 +1,2 @@
 export const URI_MS_AUTH = process.env.URI_MS_AUTH ?? '';
+export const URI_MS_PROJECTS = process.env.URI_MS_PROJECTS ?? '';

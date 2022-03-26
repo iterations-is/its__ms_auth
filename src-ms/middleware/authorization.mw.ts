@@ -14,7 +14,8 @@ export const mwAuthorization = async (req: Request, res: Response, next: NextFun
 			{ accessToken: token }
 		);
 		res.locals.jwt = verifiedTokenData.data?.payload?.payload;
-		res.locals.userId = verifiedTokenData.data?.payload?.payload.id;
+		res.locals.userId = verifiedTokenData.data?.payload?.payload?.id;
+		res.locals.role = verifiedTokenData.data?.payload?.payload?.role?.name;
 
 		return next();
 	} catch (error) {
