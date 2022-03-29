@@ -56,7 +56,9 @@ export const mwPermissions =
 					}
 				);
 
-				const projectRole = userProjectRole?.data?.payload?.role;
+				let projectRole = userProjectRole?.data?.payload?.role;
+				projectRole =
+					projectRole !== 'Leader' && projectRole !== 'Visitor' ? 'Member' : projectRole;
 
 				if (!accessProject.includes(projectRole)) {
 					return res.status(403).json({
