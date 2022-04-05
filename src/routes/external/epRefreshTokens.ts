@@ -21,6 +21,10 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 	let payload: any;
 	try {
 		payload = jwt.verify(token, JWT_SECRET);
+		if (payload?.tokenType != 'refresh')
+			return res
+				.status(400)
+				.json({ code: 'INVALID_TOKEN', payload: 'Invalid token type' } as MessageDTO);
 	} catch (err) {
 		return res.status(400).json({
 			message: 'invalid token',
