@@ -23,12 +23,12 @@ export const epRefreshTokens = (req: Request, res: Response) => {
 		payload = jwt.verify(token, JWT_SECRET);
 		if (payload?.tokenType != 'refresh')
 			return res
-				.status(400)
+				.status(403)
 				.json({ code: 'INVALID_TOKEN', payload: 'Invalid token type' } as MessageDTO);
 	} catch (err) {
-		return res.status(400).json({
-			message: 'invalid token',
-		} as MessageDTO);
+		return res
+			.status(403)
+			.json({ code: 'INVALID_TOKEN', payload: 'Invalid token type' } as MessageDTO);
 	}
 
 	// Generate a new pair with data from the old pair
