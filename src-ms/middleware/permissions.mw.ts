@@ -30,6 +30,7 @@ export const mwPermissions =
 				if (!accessGlobal.includes(res.locals.role))
 					return res.status(403).json({
 						message: 'You do not have the required permissions',
+						code: 'PERMISSION_DENIED',
 						payload: {
 							currentRole: res.locals.role,
 						},
@@ -58,11 +59,16 @@ export const mwPermissions =
 
 				let projectRole = userProjectRole?.data?.payload?.role;
 				projectRole =
-					projectRole !== 'Leader' && projectRole !== 'Visitor' ? 'Member' : projectRole;
+					projectRole === ''
+						? ''
+						: projectRole === 'Leader' || projectRole === 'Visitor'
+						? projectRole
+						: 'Member';
 
 				if (!accessProject.includes(projectRole)) {
 					return res.status(403).json({
 						message: 'You do not have the required project permissions',
+						code: 'PROJECT_PERMISSION_DENIED',
 					} as MessageDTO);
 				}
 			} catch (error) {
